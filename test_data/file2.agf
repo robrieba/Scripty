@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<AGSEditorDocument Version="3.0.3.2" VersionIndex="9" EditorVersion="3.4.0">
+  <Game>
+    <Dialogs>
+      <DialogFolder Name="Main">
+        <SubFolders />
+        <Dialogs>
+          <Dialog>
+            <ID>0</ID>
+            <Name>dCommunicator</Name>
+            <ShowTextParser>False</ShowTextParser>
+            <Script><![CDATA[@S
+cCaptain: Hello!
+    cRobot.Say("Yo!");
+    cCaptainD.Say("Me?");
+cRobot: &330 You!
+]]></Script>
+            <DialogOptions>
+              <DialogOption>
+                <ID>1</ID>
+                <Text xml:space="preserve">This is option 1</Text>
+                <Show>True</Show>
+                <Say>False</Say>
+              </DialogOption>
+              <DialogOption>
+                <ID>2</ID>
+                <Text xml:space="preserve">This is option 2</Text>
+                <Show>True</Show>
+                <Say>False</Say>
+              </DialogOption>
+            </DialogOptions>
+          </Dialog>
+          </Dialog>
+        </Dialogs>
+      </DialogFolder>
+    </Dialogs>
+  </Game>
+</AGSEditorDocument>
