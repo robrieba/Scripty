@@ -3,12 +3,12 @@ require 'thor'
 require_relative 'lib/script_builder'
 
 class Scripty < Thor
-  desc "dump <source_path>", "Print a complete dump of line of speech in the source code at <source_path>."
+  desc "dump <source_path>", "Print a complete dump of the speech lines in the source code at <source_path>."
   long_desc <<-INSTRUCTIONS
-  Scripty is a command line tool for mananging AGS speech.
+  Scripty is an extensible CLI voice acting management tool for AGS.
 
   Command:
-    dump  Print a complete lising of every line of speech in the source code.
+    dump  Print a complete lising of every line of speech.
 
             $ ruby scripty dump ../my_ags_game
 
