@@ -5,7 +5,7 @@
 Managing thousands of lines of speech in an adventure game can be frazzling.  Scripty can help.
 
 
-```bash
+```
 Command:
   dump  Print a complete lising of every line of speech.
 
