@@ -1,6 +1,6 @@
-## Scripty
+# Scripty
 
-# An extensible CLI voice acting management tool for AGS.
+## An extensible CLI voice acting management tool for AGS.
 
 ```bash
 Command:
