@@ -1,11 +1,13 @@
+require 'csv'
 require_relative "../models/script_line.rb"
 
 class ScriptBuilder
   attr_accessor :path, :script_lines
 
-  def initialize(path)
+  def initialize(path, quiet=false)
     @path = path
     @script_lines = []
+    @quiet = quiet
   end
 
   def count_asc_files
@@ -14,12 +16,12 @@ class ScriptBuilder
 
   def run
     Dir.glob("#{@path}/*.{asc,agf}").each do |f|
-      puts "Reading: #{f}"
+      puts "Reading: #{f}" unless @quiet
       sourcefile_line_number = 0
       IO.readlines(f).each do |s|
         sourcefile_line_number += 1
-        if s =~ /\.Say/
-          puts "#{sourcefile_line_number}: #{s}"
+        if s =~ /\.Say.*/
+          puts "#{sourcefile_line_number}: #{s}" unless @quiet
           @script_lines << ScriptLine.new(read_scriptline_character(s),
                                           read_scriptline_number(s),
                                           read_scriptline_text(s))
@@ -45,14 +47,13 @@ class ScriptBuilder
   private
 
   def read_scriptline_text(s)
-    # Find the text that is between the delimeters (" and ")
-    t = s[/\(\"(.*?)\"\)/, 1]
-    t.strip if t
+    # Find the text that in the '#Say' method(s)
+    s.split(/\"(.*?)\"/)[1]
   end
 
   def read_scriptline_character(s)
-    # Return the word before the .Say method call (minus the first letter)
-    s[/\w*\.Say/].split('.')[0][1..-1]
+    # Return the word before the '#Say' method call (minus the first letter)
+    s[/\w*\.Say.*/].split('.')[0]
   end
 
   def read_scriptline_number(s)
@@ -67,7 +68,7 @@ class ScriptBuilder
 
   def read_scriptline_dialog_character(s)
     # Return everthing before the frist semicolon
-    s.split(':')[0]
+    "c#{s.split(':')[0]}"
   end
 
   def read_scriptline_dialog_number(s)
