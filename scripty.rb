@@ -29,7 +29,8 @@ class Scripty < Thor
   desc "script <source_path>", "Print a formated script of the speech lines in the source code at <source_path>."
   long_desc <<-INSTRUCTIONS
   Print a formatted script of the speech lines in the source code at <source_path>.
-
+  The script will be sorted by the character's name.
+  
             $ ruby scripty script ../my_ags_game
 
           Output:
