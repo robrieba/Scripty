@@ -3,7 +3,7 @@ require 'thor'
 require_relative 'lib/script_builder'
 
 class Scripty < Thor
-  option :quiet, :type => :boolean, :default => false
+  option :quiet, :type => :boolean, :default => false, :description => 'Suppress read line output'
   desc "dump <source_path>", "Print a complete dump of the speech lines in the source code at <source_path>."
   long_desc <<-INSTRUCTIONS
   Print a complete lising of every line of speech.
@@ -24,8 +24,8 @@ class Scripty < Thor
     end
   end
 
-  option :quiet, :type => :boolean, :default => false
-  option :character, :type => :string
+  option :quiet, :type => :boolean, :default => false, :description => 'Suppress read line output'
+  option :character, :type => :string, :description => 'Specify the character to display'
   desc "script <source_path>", "Print a formated script of the speech lines in the source code at <source_path>."
   long_desc <<-INSTRUCTIONS
   Print a formatted script of the speech lines in the source code at <source_path>.

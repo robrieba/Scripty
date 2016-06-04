@@ -25,7 +25,11 @@ class ScriptBuilder
         if (s =~ /\.Say.*/) || (is_agf_file && s =~ /^[A-Za-z0-9]*:/)
           puts "#{sourcefile_line_number}: #{s}" unless @quiet
           character, number, text = read_scriptline(s, is_agf_file)
-          @script_lines << ScriptLine.new(character, number, text) if @character == character
+          if @character
+            @script_lines << ScriptLine.new(character, number, text) if @character == character
+          else
+            @script_lines << ScriptLine.new(character, number, text)
+          end
         end
       end
     end
