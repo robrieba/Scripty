@@ -4,10 +4,11 @@ require_relative "../models/script_line.rb"
 class ScriptBuilder
   attr_accessor :path, :script_lines
 
-  def initialize(path, quiet=false)
+  def initialize(path, quiet=false, character=nil)
     @path = path
     @script_lines = []
     @quiet = quiet
+    @character = character
   end
 
   def count_asc_files
@@ -20,17 +21,11 @@ class ScriptBuilder
       sourcefile_line_number = 0
       IO.readlines(f).each do |s|
         sourcefile_line_number += 1
-        if s =~ /\.Say.*/
+        is_agf_file = f =~ /\.agf/
+        if (s =~ /\.Say.*/) || (is_agf_file && s =~ /^[A-Za-z0-9]*:/)
           puts "#{sourcefile_line_number}: #{s}" unless @quiet
-          @script_lines << ScriptLine.new(read_scriptline_character(s),
-                                          read_scriptline_number(s),
-                                          read_scriptline_text(s))
-        end
-        # if the file is the .agf, also search for dialog entries
-        if f =~ /\.agf/ && s =~ /^[A-Za-z0-9]*:/
-          @script_lines << ScriptLine.new(read_scriptline_dialog_character(s),
-                                          read_scriptline_dialog_number(s),
-                                          read_scriptline_dialog_text(s))
+          character, number, text = read_scriptline(s, is_agf_file)
+          @script_lines << ScriptLine.new(character, number, text) if @character == character
         end
       end
     end
@@ -45,6 +40,14 @@ class ScriptBuilder
   end
 
   private
+
+  def read_scriptline(s, is_agf_file)
+    if is_agf_file
+      return read_scriptline_dialog_character(s), read_scriptline_dialog_number(s), read_scriptline_dialog_text(s)
+    else
+      return read_scriptline_character(s), read_scriptline_number(s), read_scriptline_text(s)
+    end
+  end
 
   def read_scriptline_text(s)
     # Find the text that in the '#Say' method(s)

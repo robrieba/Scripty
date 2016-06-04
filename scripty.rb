@@ -17,7 +17,6 @@ class Scripty < Thor
             CharacterName, 2, &2 Hello!
 
   INSTRUCTIONS
-
   def dump(source_path)
     build_script(source_path)
     @sb.script_lines.each do |sl|
@@ -26,11 +25,12 @@ class Scripty < Thor
   end
 
   option :quiet, :type => :boolean, :default => false
+  option :character, :type => :string
   desc "script <source_path>", "Print a formated script of the speech lines in the source code at <source_path>."
   long_desc <<-INSTRUCTIONS
   Print a formatted script of the speech lines in the source code at <source_path>.
   The script will be sorted by the character's name.
-  
+
             $ ruby scripty script ../my_ags_game
 
           Output:
@@ -49,7 +49,7 @@ class Scripty < Thor
   private
 
   def build_script(source_path)
-    @sb = ScriptBuilder.new(source_path, options[:quiet])
+    @sb = ScriptBuilder.new(source_path, options[:quiet], options[:character])
     @sb.run
   end
 
